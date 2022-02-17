@@ -18,13 +18,13 @@ function newMap(array, callback) {
         arr.push(getCallback)
 
     }
-
     return arr
     
 }
 
 // REPRODUZ O MÉTODO FILTER
 function newFilter(array, callback) {
+    let arr = []
 
     for (let i = 0; i < array.length; i++) {
         const filter = callback(array[i], i, array)
@@ -33,12 +33,10 @@ function newFilter(array, callback) {
             arr.push(array[i])
 
         }
-
     }
 
     return arr
 }
-
 // REPRODUZ O MÉTODO FIND
 function newFind(array, callback) {
 
@@ -49,33 +47,34 @@ function newFind(array, callback) {
 
         if (isExist) {
             result = array[i]
-            break
+           
         }
 
     }
-
+    console.log(result)
     return result
 }
 
+ 
 // REPRODUZ O MÉTODO FINDINDEX
 function newFindIndex(array, callback) {
-    const {length} = array
-
-    for (let i = 0; i < length; i++) {
+    let result = -1
+    for (let i = 0; i < array.length; i++) {
         const value = array[i]
 
         if (callback(value, i, array)) {
+         
             return i
         }
 
     }
-
-    return -1
+  
+    return result
 }
+
 
 // REPRODUZ O MÉTODO REDUCE
 function newReduce(array, callback, initValue) {
-    const {length} = array
 
     let acumulator = initValue
     let initIndex = 0
@@ -85,45 +84,48 @@ function newReduce(array, callback, initValue) {
         initIndex = 1
     }
 
-    for (let i = initIndex; i < length; i++) {
+    for (let i = 0; i < array.length; i++) {
         const value = array[i]
         acumulator = callback(acumulator, value, i, array);
     }
-
+    console.log(acumulator)
     return acumulator
-
+    
 }
 
 // REPRODUZ O MÉTODO SOME
 function newSome(array, callback) {
-    const {length} = array
-
-    for (let i = 0; i < length; i++) {
+  
+    for (let i = 0; i < array.length; i++) {
         const value = array[i]
 
         if (callback(value, i, array)) {
+          
             return true
         }
     }
-
+  
     return false
 }
 
+
 // REPRODUZ O MÉTODO EVERY
 function newEvery(array, callback) {
-    const {length} = array
-
-    for (let i = 0; i < length; i++) {
+ 
+    for (let i = 0; i < array.length; i++) {
         const value = array[i]
 
-        if (! callback(value, i, array)) {
+        if (!callback(value, i, array)) {
+         
             return false
         }
 
     }
-
+  
     return true
 }
+
+
 
 // REPRODUZ O MÉTODO FILL
 function newFill(array, value, startIndex, endIndex) {
@@ -141,12 +143,14 @@ function newFill(array, value, startIndex, endIndex) {
 
 // REPRODUZ O MÉTODO INCLUDES
 function newIncludes(array, returnedValue) {
-    return some(array, value => value === returnedValue);
+    return newSome(array, value => value === returnedValue);
 }
+
+
 
 // REPRODUZ O MÉTODO INDEXOF
 function newIndexOf(array, returnedValue) {
-    return findIndex(array, value => value === returnedValue);
+    return newFindIndex(array, value => value === returnedValue);
 }
 
 // REPRODUZ O MÉTODO CONCAT
