@@ -37,6 +37,7 @@ function newFilter(array, callback) {
 
     return arr
 }
+
 // REPRODUZ O MÉTODO FIND
 function newFind(array, callback) {
 
@@ -51,10 +52,9 @@ function newFind(array, callback) {
         }
 
     }
-    console.log(result)
+   
     return result
 }
-
  
 // REPRODUZ O MÉTODO FINDINDEX
 function newFindIndex(array, callback) {
@@ -72,7 +72,6 @@ function newFindIndex(array, callback) {
     return result
 }
 
-
 // REPRODUZ O MÉTODO REDUCE
 function newReduce(array, callback, initValue) {
 
@@ -88,7 +87,7 @@ function newReduce(array, callback, initValue) {
         const value = array[i]
         acumulator = callback(acumulator, value, i, array);
     }
-    console.log(acumulator)
+
     return acumulator
     
 }
@@ -108,7 +107,6 @@ function newSome(array, callback) {
     return false
 }
 
-
 // REPRODUZ O MÉTODO EVERY
 function newEvery(array, callback) {
  
@@ -125,64 +123,84 @@ function newEvery(array, callback) {
     return true
 }
 
-
-
 // REPRODUZ O MÉTODO FILL
 function newFill(array, value, startIndex, endIndex) {
-    startIndex = 0
-    endIndex = array.length
+    if(startIndex === undefined){
+        startIndex = 0
+    }
 
-    for (let i = startIndex; i <= endIndex; i++) {
-        array[i] = value
+    if(startIndex < 0){
+        startIndex = array.length + startIndex
+    }
 
+    if(endIndex < 0){
+        endIndex = array.length + endIndex
+    }
+
+    if(endIndex === undefined){
+        endIndex = array.length
+    }
+
+    for (let i = startIndex; i < endIndex; i++) {
+      
+           array[i] = value
+   
     }
 
     return array
-
 }
 
 // REPRODUZ O MÉTODO INCLUDES
-function newIncludes(array, returnedValue) {
-    return newSome(array, value => value === returnedValue);
+function newIncludes(array, returnedValue, index) {
+   
+
+    for (let i = 0; i < array.length; i++) {
+        const value = array[i]
+        if(index === undefined){
+            if(value === returnedValue){
+                return  true
+            }else{
+                return false
+            }
+        }else if(index === i){
+            if(value === returnedValue){
+                return  true
+            }else{
+                return false
+            }
+        }
+
+    } 
 }
-
-
 
 // REPRODUZ O MÉTODO INDEXOF
 function newIndexOf(array, returnedValue) {
     return newFindIndex(array, value => value === returnedValue);
-}
+  }
 
 // REPRODUZ O MÉTODO CONCAT
 function newConcat(array, ...values) {
-    const result = [... array]
-    const {length} = values
-
-    for (let i = 0; i < length; i += 1) {
-        const value = values[i]
-
-        if (Array.isArray(value)) {
-            push(result, ... value)
-
-        } else {
-            push(result, value)
-
-        }
-
+    
+    const arrResult = [...array]
+    for (let i = 0; i < values.length; i += 1) {
+        arrResult.push(...values[i])
+  
     }
 
-    return result
+    return arrResult
+  }
+
+  // REPRODUZ O MÉTODO JOIN
+function newJoin(array, joinValue) {
+  return newReduce(array, (result, current, i) => {
+      if (i === 0) {
+          return current
+      }
+
+      return `${result}${joinValue}${current}`
+
+  })
+
 }
 
-// REPRODUZ O MÉTODO JOIN
-function newJoin(array, joinAny) {
-    return reduce(array, (result, current, i) => {
-        if (i === 0) {
-            return current
-        }
 
-        return `${result}${joinAny}${current}`
-
-    }, '',)
-
-}
